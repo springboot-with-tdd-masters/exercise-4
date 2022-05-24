@@ -40,7 +40,8 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Book>> getAll(@Param("title") String title, @PageableDefault Pageable page) {
+    public ResponseEntity<Page<Book>> getAll(@RequestParam(required = false) String title,
+                                             @PageableDefault Pageable page) {
         if (title == null) {
             return getAll(page);
         }

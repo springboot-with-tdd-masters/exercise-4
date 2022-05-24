@@ -3,7 +3,7 @@ package com.softvision.library.tdd.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softvision.library.tdd.SecurityTestConfig;
 import com.softvision.library.tdd.model.Book;
-import com.softvision.library.tdd.model.RecordNotFoundException;
+import com.softvision.library.tdd.model.exception.RecordNotFoundException;
 import com.softvision.library.tdd.service.BookService;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
@@ -13,7 +13,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.*;
@@ -168,7 +167,7 @@ public class BookControllerTests {
     void test_getAll_fail_unauthorized() throws Exception {
         when(bookService.getAll(any())).thenThrow(RecordNotFoundException.class);
 
-        mockMvc.perform(get("/books")).andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/books")).andExpect(status().isForbidden());
 
         verify(bookService, atMostOnce()).getAll(any());
     }

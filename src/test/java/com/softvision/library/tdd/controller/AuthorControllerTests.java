@@ -3,9 +3,8 @@ package com.softvision.library.tdd.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.softvision.library.tdd.SecurityTestConfig;
 import com.softvision.library.tdd.model.Author;
-import com.softvision.library.tdd.model.RecordNotFoundException;
+import com.softvision.library.tdd.model.exception.RecordNotFoundException;
 import com.softvision.library.tdd.service.AuthorService;
-import com.softvision.library.tdd.service.BookService;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +13,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.*;
@@ -168,7 +166,7 @@ public class AuthorControllerTests {
     void test_getAll_fail_unauthorized() throws Exception {
         when(authorService.getAll(any())).thenThrow(RecordNotFoundException.class);
 
-        mockMvc.perform(get("/authors")).andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/authors")).andExpect(status().isForbidden());
 
         verify(authorService, atMostOnce()).getAll(any());
     }

@@ -2,16 +2,13 @@ package com.softvision.library.tdd.service;
 
 import com.softvision.library.tdd.model.Author;
 import com.softvision.library.tdd.model.Book;
-import com.softvision.library.tdd.model.RecordNotFoundException;
+import com.softvision.library.tdd.model.exception.RecordNotFoundException;
 import com.softvision.library.tdd.repository.AuthorRepository;
 import com.softvision.library.tdd.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class AuthorServiceImpl implements AuthorService {

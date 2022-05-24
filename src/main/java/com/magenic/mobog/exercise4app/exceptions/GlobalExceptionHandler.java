@@ -1,6 +1,8 @@
 package com.magenic.mobog.exercise4app.exceptions;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -26,5 +28,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	@ExceptionHandler(UserExistsException.class)
 	public ResponseEntity<String> handleUserExistsException(UserExistsException ex, WebRequest req){
 		return ResponseEntity.status(ex.getHttpStatus()).body("username already exists");
+	}
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<String> handleUsernameNotFound(UsernameNotFoundException ex, WebRequest req){
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body("user not allowed.");
+	}@ExceptionHandler(UserNotAllowedException.class)
+	public ResponseEntity<String> handleUsernameNotFound(UserNotAllowedException ex, WebRequest req){
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
 	}
 }

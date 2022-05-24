@@ -1,5 +1,6 @@
 package com.magenic.mobog.exercise4app.security.controllers;
 
+import com.magenic.mobog.exercise4app.exceptions.UserNotAllowedException;
 import com.magenic.mobog.exercise4app.security.entities.UserWrapper;
 import com.magenic.mobog.exercise4app.security.jwt.JwtTokenUtil;
 import com.magenic.mobog.exercise4app.security.requests.JwtTokenRequest;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -43,9 +45,9 @@ public class JwtController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, password));
         } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
+            throw new UserNotAllowedException("user access is disabled.");
         } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
+            throw new UserNotAllowedException("user access is not allowed.");
         }
     }
 

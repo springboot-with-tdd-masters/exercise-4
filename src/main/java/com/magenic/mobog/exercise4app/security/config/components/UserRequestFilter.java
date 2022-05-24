@@ -1,5 +1,6 @@
 package com.magenic.mobog.exercise4app.security.config.components;
 
+import com.magenic.mobog.exercise4app.exceptions.UserNotAllowedException;
 import com.magenic.mobog.exercise4app.security.jwt.JwtTokenUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -50,11 +52,15 @@ public class UserRequestFilter extends OncePerRequestFilter {
         } else {
             logger.warn("JWT Token does not begin with Bearer String");
         }
-        if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
-            UserDetails userDetails = this.service.loadUserByUsername(userName);
-            UsernamePasswordAuthenticationToken userNamePwAuthToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            userNamePwAuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(userNamePwAuthToken);
+        try {
+            if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
+                UserDetails userDetails = this.service.loadUserByUsername(userName);
+                UsernamePasswordAuthenticationToken userNamePwAuthToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                userNamePwAuthToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(userNamePwAuthToken);
+            }
+        } catch (UsernameNotFoundException e){
+            throw new UserNotAllowedException("User does not exists");
         }
         filterChain.doFilter(request, response);
     }

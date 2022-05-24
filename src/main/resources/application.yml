@@ -3,6 +3,3 @@ spring:
         user:
             name: admin
             password: password
-management:
-    security:
-        enabled: false

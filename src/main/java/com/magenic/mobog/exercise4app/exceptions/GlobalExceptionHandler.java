@@ -18,4 +18,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	public ResponseEntity<String> handleNotFoundException(EntityNotFoundException ex, WebRequest req){
 		return ResponseEntity.status(ex.getHttpStatus()).body("resource not found");
 	}
+
+	@ExceptionHandler(InternalServerException.class)
+	public ResponseEntity<String> handleInternalServerException(InternalServerException ex, WebRequest req){
+		return ResponseEntity.status(ex.getHttpStatus()).body("unable to process request");
+	}
+	@ExceptionHandler(UserExistsException.class)
+	public ResponseEntity<String> handleUserExistsException(UserExistsException ex, WebRequest req){
+		return ResponseEntity.status(ex.getHttpStatus()).body("username already exists");
+	}
 }

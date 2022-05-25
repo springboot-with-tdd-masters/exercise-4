@@ -1,7 +1,8 @@
 package com.softvision.library.tdd.handlers;
 
 import com.softvision.library.tdd.model.LibraryError;
-import com.softvision.library.tdd.model.RecordNotFoundException;
+import com.softvision.library.tdd.model.exception.RecordNotFoundException;
+import com.softvision.library.tdd.model.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,7 +26,7 @@ public class LibraryExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public final ResponseEntity<LibraryError> handleGenericException(Exception ex,
                                                                      WebRequest request) {
-        return new ResponseEntity<>(new LibraryError("Internal Server Error. " + ex.getMessage(),
+        return new ResponseEntity<>(new LibraryError("Internal Server Error: " + ex.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     new Date(),
                     urlPathHelper.getPathWithinApplication(((ServletWebRequest)request).getRequest())),
@@ -36,10 +37,21 @@ public class LibraryExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler
     public final ResponseEntity<LibraryError> handleRecordNotFoundException(RecordNotFoundException ex,
                                                                             WebRequest request) {
-        return new ResponseEntity<>(new LibraryError("Record(s) Not Found.",
+        return new ResponseEntity<>(new LibraryError("Record(s) Not Found",
                     HttpStatus.NOT_FOUND.value(),
                     new Date(),
                     urlPathHelper.getPathWithinApplication(((ServletWebRequest)request).getRequest())),
+                new HttpHeaders(),
+                HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public final ResponseEntity<LibraryError> handleUnauthorizedException(UnauthorizedException ex,
+                                                                          WebRequest request) {
+        return new ResponseEntity<>(new LibraryError("Unauthorized: " + ex.getMessage(),
+                HttpStatus.UNAUTHORIZED.value(),
+                new Date(),
+                urlPathHelper.getPathWithinApplication(((ServletWebRequest)request).getRequest())),
                 new HttpHeaders(),
                 HttpStatus.NOT_FOUND);
     }
@@ -49,7 +61,7 @@ public class LibraryExceptionHandler extends ResponseEntityExceptionHandler {
                                                                     HttpHeaders headers,
                                                                     HttpStatus status,
                                                                     WebRequest request) {
-        return new ResponseEntity<>(new LibraryError("Validation failed. " + ex.getMessage(),
+        return new ResponseEntity<>(new LibraryError("Validation failed: " + ex.getMessage(),
                     HttpStatus.BAD_REQUEST.value(),
                     new Date(),
                     urlPathHelper.getPathWithinApplication(((ServletWebRequest)request).getRequest())),

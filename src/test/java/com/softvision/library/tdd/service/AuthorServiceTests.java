@@ -2,7 +2,7 @@ package com.softvision.library.tdd.service;
 
 import com.softvision.library.tdd.model.Author;
 import com.softvision.library.tdd.model.Book;
-import com.softvision.library.tdd.model.RecordNotFoundException;
+import com.softvision.library.tdd.model.exception.RecordNotFoundException;
 import com.softvision.library.tdd.repository.AuthorRepository;
 import com.softvision.library.tdd.repository.BookRepository;
 import org.junit.jupiter.api.DisplayName;

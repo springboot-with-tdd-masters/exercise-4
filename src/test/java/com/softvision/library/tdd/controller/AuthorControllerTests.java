@@ -161,14 +161,10 @@ public class AuthorControllerTests {
     }
 
     @Test
-    @DisplayName("Given an anonymous user, response should give http status 401 (unauthorized).")
+    @DisplayName("Given an anonymous user, response should give http status 403 (forbidden).")
     @WithAnonymousUser()
     void test_getAll_fail_unauthorized() throws Exception {
-        when(authorService.getAll(any())).thenThrow(RecordNotFoundException.class);
-
         mockMvc.perform(get("/authors")).andExpect(status().isForbidden());
-
-        verify(authorService, atMostOnce()).getAll(any());
     }
 
     private Page<Author> createMockPage(List<Author> content) {

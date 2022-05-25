@@ -3,6 +3,8 @@ package com.softvision.library.tdd.security.jwt;
 import com.softvision.library.tdd.model.exception.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +20,8 @@ public class JwtUtils {
     private String jwtSecret;
     @Value("${com.softvision.library.tdd.jwt.expirationMs}")
     private Long jwtExpirationMs;
+
+    private final Log logger = LogFactory.getLog(AuthEntryPointJwt.class.getName());
 
     public String generateJwt(Authentication authentication) {
         UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
@@ -42,7 +46,8 @@ public class JwtUtils {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         } catch (Exception e) {
-            throw new UnauthorizedException(e.getMessage());
+            logger.error(e);
+            throw new UnauthorizedException("Token is invalid.", e);
         }
     }
 }

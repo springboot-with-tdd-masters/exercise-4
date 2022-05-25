@@ -1,6 +1,5 @@
 package com.softvision.library.tdd.config;
 
-import com.softvision.library.tdd.security.jwt.AuthEntryPointJwt;
 import com.softvision.library.tdd.security.jwt.AuthTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

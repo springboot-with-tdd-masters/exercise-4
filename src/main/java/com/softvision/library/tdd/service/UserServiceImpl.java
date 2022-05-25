@@ -6,7 +6,6 @@ import com.softvision.library.tdd.model.exception.UserNotFoundException;
 import com.softvision.library.tdd.repository.UserRepository;
 import com.softvision.library.tdd.utils.UserDetailsAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

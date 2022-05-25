@@ -26,10 +26,8 @@ public class UserServiceTests {
 
     @Mock
     UserRepository mockUserRepository;
-
     @Mock
     PasswordEncoder mockPasswordEncoder;
-
 
     @InjectMocks
     UserService userService = new UserServiceImpl();

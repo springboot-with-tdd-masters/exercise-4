@@ -16,6 +16,7 @@ import com.example.exercise2.service.model.Book;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +29,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
 
 @WebMvcTest(AuthorController.class)
 @AutoConfigureMockMvc
+@WithMockUser(username = "user", password = "pwd", roles = "USER")
 public class AuthorControllerTest {
 
   @Autowired
@@ -45,6 +51,14 @@ public class AuthorControllerTest {
   private BookService bookService;
 
   private final ObjectMapper objectMapper = new ObjectMapper();
+
+  @Autowired
+  private WebApplicationContext webApplicationContext;
+
+  @BeforeEach
+  public void setup() {
+    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
 
   @Test
   @DisplayName("Given a successful save of author, should return author details and http status 200")
@@ -68,7 +82,7 @@ public class AuthorControllerTest {
   @Test
   @DisplayName("Get list of authors with paged 0, size 2 and sorted by name, ascending")
   void get_authorlist_with_paged0_size2_sortedbyNameAsc() throws Exception {
-  //GET - /authors?page=0&size=2&sort=name,asc
+    //GET - /authors?page=0&size=2&sort=name,asc
 
     List<Author> authorList =
         Arrays.asList(new Author(1l, "Mr Bibo"),
@@ -76,15 +90,14 @@ public class AuthorControllerTest {
             new Author(3l, "Mr Bibo3"),
             new Author(4l, "Mr Bibo4"),
             new Author(5l, "Mr Bibo5"),
-            new Author(6l, "Mr Bibo6"))
-    ;
+            new Author(6l, "Mr Bibo6"));
 
-    String[] sort = {"name","asc"};
+    String[] sort = {"name", "asc"};
 
     Pageable pagingSort = PageRequest.of(0, 2, Sort.by("name").descending());
-    Page<Author> expectedResponse = new PageImpl<>(authorList,pagingSort,authorList.size());
+    Page<Author> expectedResponse = new PageImpl<>(authorList, pagingSort, authorList.size());
 
-    when(authorService.findAll(0,2,sort)).thenReturn(expectedResponse);
+    when(authorService.findAll(0, 2, sort)).thenReturn(expectedResponse);
 
     this.mockMvc.perform(get("/authors?page=0&size=2&sort=name,asc")
             .contentType(MediaType.APPLICATION_JSON))
@@ -94,14 +107,14 @@ public class AuthorControllerTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.size").value(2))
     ;
 
-    verify(authorService).findAll(0,2,sort);
+    verify(authorService).findAll(0, 2, sort);
 
   }
 
   @Test
   @DisplayName("Should return author details given a valid author id")
   void should_return_singleAuthorDetails() throws Exception {
-  //GET - /authors/{id}
+    //GET - /authors/{id}
     Author expectedResponse = new Author(2L, "Mr Bibo2");
     when(authorService.findById(2)).thenReturn(expectedResponse);
 
@@ -123,7 +136,6 @@ public class AuthorControllerTest {
     this.mockMvc.perform(get("/authors/2")
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNotFound());
-    ;
     verify(authorService).findById(2);
   }
 
@@ -147,17 +159,13 @@ public class AuthorControllerTest {
         ).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
         .andExpect(MockMvcResultMatchers.jsonPath("$.title").value(expectedBook.getTitle()))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.description").value(expectedBook.getDescription()))
-        .andExpect(MockMvcResultMatchers.jsonPath("$.author.id").value(expectedBook.getAuthor().getId()))
+        .andExpect(
+            MockMvcResultMatchers.jsonPath("$.description").value(expectedBook.getDescription()))
+        .andExpect(
+            MockMvcResultMatchers.jsonPath("$.author.id").value(expectedBook.getAuthor().getId()))
     ;
     verify(authorService).findById(1);
     verify(bookService).save(expectedBook);
-  }
-
-  @Test
-  @DisplayName("Get list of books with paged 0, size 2 and sorted by title, ascending")
-  void get_booklist_with_paged0_size2_sortedbyTitleAsc() throws Exception {
-    //GET - /authors/{id}/books?page=0&size=2&sort=name,asc
   }
 
   @Test
@@ -166,7 +174,7 @@ public class AuthorControllerTest {
     //GET - /authors/{authorid}/books/{bookid}
 
     Author expectedAuthor = new Author(2L, "Mr Bibo2");
-    Book expectedBook = new Book(1L,"Book Title A", "Book Desc C",expectedAuthor);
+    Book expectedBook = new Book(1L, "Book Title A", "Book Desc C", expectedAuthor);
 
     when(authorService.findById(2)).thenReturn(expectedAuthor);
     when(bookService.findById(1L)).thenReturn(expectedBook);
@@ -180,11 +188,6 @@ public class AuthorControllerTest {
     verify(authorService).findById(2);
     verify(bookService).findById(1L);
   }
-
-
-
-
-
 
 
 }

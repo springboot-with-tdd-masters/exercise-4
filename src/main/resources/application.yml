@@ -1,0 +1,5 @@
+jwt:
+    salt: exercise4
+    validity: 30000 # in millis
+    issuer: mobog
+

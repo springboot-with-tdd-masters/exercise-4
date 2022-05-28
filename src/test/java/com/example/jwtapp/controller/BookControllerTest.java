@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -25,8 +26,8 @@ import com.example.jwtapp.model.dto.BookDto;
 import com.example.jwtapp.service.AuthorService;
 import com.example.jwtapp.service.BookService;
 
-@WebMvcTest
-@AutoConfigureMockMvc
+@WebMvcTest(BookController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class BookControllerTest {
 	
 	@Autowired
@@ -37,6 +38,9 @@ public class BookControllerTest {
 	
 	@MockBean
 	private AuthorService authorService;
+
+	@MockBean
+	private UserDetailsService userService;
 	
 	@Test
 	@DisplayName("Get book by title")

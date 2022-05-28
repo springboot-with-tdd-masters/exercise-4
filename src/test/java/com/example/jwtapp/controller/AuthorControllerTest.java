@@ -23,6 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -33,8 +34,8 @@ import com.example.jwtapp.service.AuthorService;
 import com.example.jwtapp.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest
-@AutoConfigureMockMvc
+@WebMvcTest(AuthorController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class AuthorControllerTest {
 
 	@Autowired
@@ -42,6 +43,9 @@ public class AuthorControllerTest {
 	 
 	@MockBean
 	private AuthorService authorService;
+	
+	@MockBean
+	private UserDetailsService userService;
 	
 	@MockBean
 	private BookService bookService;
@@ -71,6 +75,7 @@ public class AuthorControllerTest {
 		this.mockMvc.perform(post("/authors").content(
 		            	objectMapper.writeValueAsString(request)
 		    		).contentType(MediaType.APPLICATION_JSON))
+
 			.andExpect(status().isOk())
 			.andExpect(MockMvcResultMatchers.jsonPath("$.id").value("1"))
 			.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(name))

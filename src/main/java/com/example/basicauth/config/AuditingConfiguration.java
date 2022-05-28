@@ -1,4 +1,4 @@
-package com.example.basicauth;
+package com.example.basicauth.config;
 
 import java.util.Optional;
 

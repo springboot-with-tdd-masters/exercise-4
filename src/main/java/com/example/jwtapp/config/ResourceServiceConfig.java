@@ -1,4 +1,4 @@
-package com.example.jwtapp;
+package com.example.jwtapp.config;
 
 import javax.servlet.http.HttpServletRequest;
 

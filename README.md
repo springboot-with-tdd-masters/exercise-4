@@ -1,2 +1,1 @@
-# exercise-4
-Spring security exercise
+# exercise-3

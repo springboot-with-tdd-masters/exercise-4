@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "c1eaeb13-eccb-42f4-8700-64f48337f88b",
+		"name": "Authors",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Save Author",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"John Doe\"    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/authors",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/authors/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FInd All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/authors?page=0&size=10&sortBy=name&isAsc=false",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"authors"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sortBy",
+							"value": "name"
+						},
+						{
+							"key": "isAsc",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJkazVVZWRJVGcwaXJ0elFxeHJyRzZNcW5uMG80Y2pfZC1CWmg1ZFc1bWQ0In0.eyJqdGkiOiJiZTgxMmJjZi04YjgyLTQzZDctODMzMS01ZTQ1M2UxMDcxZDMiLCJleHAiOjE2NTM1MjAwOTEsIm5iZiI6MCwiaWF0IjoxNjUzNDg0MDkxLCJpc3MiOiJodHRwOi8vNS4xODEuMjE3LjIwMzo4MDgwL2F1dGgvcmVhbG1zL1NwcmluZ0Jvb3RLZXljbG9hayIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiJiZDhjYjZhNy0yNGY2LTRiMmQtOWE5OS1mODM4ZmRlYzk0NWMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJsb2dpbi1hcHAiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiI4YzJmOGEzMC1iZDE0LTQ2MDMtOGEzYS1kMjQ2YjUzYTZkNWYiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbImh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC8iXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJ1c2VyIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ1c2VyMSJ9.EOeU-anESoIR6eDqgj0rTuOyO_6ftSnUma9oAbRq-1_7fEmw2zdblr9F0Lv954SCKuH2TsyzxdpRoBFWcPD8u4yUiKOdUvpxVZwCTgb-GHkoqwRTnJDML12iWAE4QWOvDe5AuTdljcZZMzRFq1JcZSgDCOnMaeV7c9XNfzKs-EPP4l_wC_WhvgIxJv1yMW861dNAbYccsMm-2PrbuvIeHNFCHrE6tP6mfRr9bFYRnq7JKKV9XJ-PTLvdhljlmBeKXTez31cZXDdNR3rlf1J-fdqacJdxpiE1yKL7Eg0N5wWuq4laeyOHTx5BSQ_Qbrkdl3sbuXxbJQWEQDyxlfB-kA",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,4 +1,4 @@
-package com.csv.bookscrudexercise3.exception;
+package com.csv.bookscrudexercise4.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>("Internal Server Error", new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@ExceptionHandler(RecordNotFoundException.class)
+	@ExceptionHandler({RecordNotFoundException.class, UserNameNotFoundException.class})
 	public final ResponseEntity<Object> handleBookNotFoundException(RecordNotFoundException ex, WebRequest request) {
 		return new ResponseEntity<Object>(ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND);
 	}

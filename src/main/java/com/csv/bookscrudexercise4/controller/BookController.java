@@ -1,4 +1,4 @@
-package com.csv.bookscrudexercise3.controller;
+package com.csv.bookscrudexercise4.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.csv.bookscrudexercise3.model.Book;
-import com.csv.bookscrudexercise3.service.BookService;
+import com.csv.bookscrudexercise4.model.Book;
+import com.csv.bookscrudexercise4.service.BookService;
 
 @RestController
 @RequestMapping(value="/books")

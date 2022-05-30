@@ -1,11 +1,11 @@
-package com.csv.bookscrudexercise3.service;
+package com.csv.bookscrudexercise4.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.csv.bookscrudexercise3.exception.RecordNotFoundException;
-import com.csv.bookscrudexercise3.model.Author;
+import com.csv.bookscrudexercise4.exception.RecordNotFoundException;
+import com.csv.bookscrudexercise4.model.Author;
 
 @Service
 public interface AuthorService {

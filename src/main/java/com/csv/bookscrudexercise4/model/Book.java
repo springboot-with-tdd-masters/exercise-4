@@ -1,4 +1,4 @@
-package com.csv.bookscrudexercise3.model;
+package com.csv.bookscrudexercise4.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;

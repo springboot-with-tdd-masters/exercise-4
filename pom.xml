@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.java.master</groupId>
-	<artifactId>exercise1</artifactId>
+	<artifactId>exercise4</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>exercise1</name>
-	<description>Exercise 1 for Java Master Class</description>
+	<description>Exercise 4 for Java Master Class</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .build();
 
         UserDetails admin = userBuilder
-                .username("catipon.admin")
+                .username("admin.catipon")
                 .password("password")
                 .roles("USER", "ADMIN")
                 .build();
